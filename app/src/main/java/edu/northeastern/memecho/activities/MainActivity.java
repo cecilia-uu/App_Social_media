@@ -1,8 +1,10 @@
-package edu.northeastern.memecho;
+package edu.northeastern.memecho.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import edu.northeastern.memecho.R;
 
 public class MainActivity extends AppCompatActivity {
 
