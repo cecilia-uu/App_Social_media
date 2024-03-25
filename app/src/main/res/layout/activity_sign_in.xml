@@ -63,6 +63,17 @@
             android:paddingEnd="@dimen/_16sdp"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/_13ssp"/>
+
+        <TextView
+            android:id="@+id/textForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="@string/forgot_password"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
