@@ -62,4 +62,10 @@ dependencies {
 
     // MultiDex
     implementation("androidx.multidex:multidex:2.0.1")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Circular image
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 }

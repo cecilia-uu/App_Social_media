@@ -15,6 +15,9 @@
         android:theme="@style/Base.Theme.MemEcho"
         tools:targetApi="31">
         <activity
+            android:name=".activities.HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ChatActivity"
             android:exported="false" />
         <activity

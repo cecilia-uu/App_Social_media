@@ -14,4 +14,22 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="default_web_client_id">43782953494-erv98qldc6sqstsrnr917k39okmoc7nd.apps.googleusercontent.com</string>
     <string name="sign_in_by_google">Sign In By Google</string>
+    <string name="share">Share</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="add">Add</string>
+    <string name="notification">Notification</string>
+    <string name="profile">Profile</string>
+    <string name="add_fragment">Add Fragment</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="notification_fragment">Notification Fragment</string>
+    <string name="profile_fragment">Profile Fragment</string>
+    <string name="search_fragment">Search Fragment</string>
+    <string name="username">Username</string>
+    <string name="_2h">2h</string>
+    <string name="post">Post</string>
+    <string name="_100_likes">100 likes</string>
+    />
 </resources>
