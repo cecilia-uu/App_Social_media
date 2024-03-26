@@ -12,7 +12,12 @@
           "package_name": "edu.northeastern.memecho"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "43782953494-erv98qldc6sqstsrnr917k39okmoc7nd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBU10n3T4svTLRanu_W50N_AXwqkxqCODA"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43782953494-erv98qldc6sqstsrnr917k39okmoc7nd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
