@@ -36,6 +36,7 @@ import java.util.HashMap;
 
 import edu.northeastern.memecho.R;
 import edu.northeastern.memecho.databinding.ActivitySignInBinding;
+import edu.northeastern.memecho.fragments.ForgotPasswordFragment;
 import edu.northeastern.memecho.utilities.Constants;
 import edu.northeastern.memecho.utilities.PreferenceManager;
 
@@ -73,6 +74,9 @@ public class SignInActivity extends AppCompatActivity {
         setListeners();
     }
 
+    /**
+     * Listeners for create new account, sign-in, google sign-in and forgot password.
+     */
     private void setListeners() {
         binding.textCreateNewAccount.setOnClickListener(v ->
                 startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
@@ -82,6 +86,9 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
         binding.buttonGoogleSignIn.setOnClickListener(v -> signInByGoogle());
+        // forgot password function
+        binding.textForgotPassword.setOnClickListener(v ->
+                startActivity(new Intent(getApplicationContext(), ForgotPasswordFragment.class)));
     }
     private void signInByGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();

@@ -38,5 +38,6 @@
     <string name="posts">Posts</string>
     <string name="followers">Followers</string>
     <string name="follow">Follow</string>
+    <string name="recover">Recover</string>
     />
 </resources>
