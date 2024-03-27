@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -24,6 +26,9 @@ import edu.northeastern.memecho.databinding.ActivitySignUpBinding;
 import edu.northeastern.memecho.utilities.Constants;
 import edu.northeastern.memecho.utilities.PreferenceManager;
 
+/**
+ * Create a new account.
+ */
 public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
     private String encodedImage;
@@ -65,6 +70,13 @@ public class SignUpActivity extends AppCompatActivity {
         user.put(Constants.KEY_EMAIL, binding.inputEmail.getText().toString());
         user.put(Constants.KEY_PASSWORD, binding.inputPassword.getText().toString());
         user.put(Constants.KEY_IMAGE, encodedImage);
+        // TODO
+        // Following and follower number, post number, initially 0
+        user.put(Constants.KEY_FOLLOWING_NUM, 0);
+        user.put(Constants.KEY_FOLLOWER_NUM, 0);
+        user.put(Constants.KEY_POST_NUM, 0);
+        user.put(Constants.KEY_STATUS, " ");
+
         database.collection(Constants.KEY_COLLECTION_USERS)
                 .add(user)
                 .addOnSuccessListener(documentReference -> {
@@ -73,6 +85,13 @@ public class SignUpActivity extends AppCompatActivity {
                     preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
                     preferenceManager.putString(Constants.KEY_NAME, binding.inputName.getText().toString());
                     preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
+                    // load it into the next activity
+                    // TODO: might change??
+                    preferenceManager.putString(Constants.KEY_FOLLOWER_NUM, "0");
+                    preferenceManager.putString(Constants.KEY_FOLLOWING_NUM, "0");
+                    preferenceManager.putString(Constants.KEY_POST_NUM, "0");
+                    preferenceManager.putString(Constants.KEY_STATUS, " ");
+
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

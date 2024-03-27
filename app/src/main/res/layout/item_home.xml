@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImage"
@@ -99,21 +99,7 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/linearLayout"
         android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        />
-
-
-
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"/>
+        android:paddingEnd="8dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

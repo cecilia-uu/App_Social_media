@@ -1,8 +1,12 @@
 package edu.northeastern.memecho.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,83 +24,83 @@ import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import edu.northeastern.memecho.R;
+import edu.northeastern.memecho.databinding.FragmentHomeBinding;
+import edu.northeastern.memecho.databinding.ItemHomeBinding;
 import edu.northeastern.memecho.models.HomeModel;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
-    private List<HomeModel> list;
-    private Context context;
+/**
+ * Handle item_home.xml.
+ */
 
-    public HomeAdapter(List<HomeModel> list, Context context) {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder>{
+    private List<HomeModel> list;
+
+    public HomeAdapter(List<HomeModel> list) {
         this.list = list;
-        this.context = context;
     }
 
     @NonNull
     @Override
-    public HomeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home, parent, false);
-        return new HomeHolder(view);
+    public HomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemHomeBinding itemHomeBinding = ItemHomeBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false
+        );
+        return new HomeViewHolder(itemHomeBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeHolder holder, int position) {
-        holder.userName.setText(list.get(position).getUserName());
-        holder.timestamp.setText(list.get(position).getTimestamp());
-
-        // like count
-        int count = list.get(position).getLikeCount();
-
-        if (count == 0) {
-            holder.likeCount.setVisibility(View.INVISIBLE);
-        } else if (count == 1){
-            holder.likeCount.setText(count + " like");
-        } else {
-            holder.likeCount.setText(count + " likes");
-        }
-
-        holder.timestamp.setText(list.get(position).getTimestamp());
-
-        Random random = new Random();
-
-        int color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
-
-        Glide.with(context.getApplicationContext())
-                .load(list.get(position).getProfileImage())
-                .placeholder(R.drawable.ic_profile)
-                .timeout(6500)
-                .into(holder.profileImage);
-
-        Glide.with(context.getApplicationContext())
-                .load(list.get(position).getPostImage())
-                .placeholder(new ColorDrawable(color))
-                .timeout(7000)
-                .into(holder.imageView);
+    public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
+        holder.setHomeData(list.get(position));
     }
-
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list != null ? list.size() : 0;
     }
+    static class HomeViewHolder extends RecyclerView.ViewHolder {
+        ItemHomeBinding binding;
 
-    static class HomeHolder extends RecyclerView.ViewHolder {
-        private CircleImageView profileImage;
-        private TextView userName, timestamp, likeCount;
-        private ImageView imageView;
-        private ImageButton likeBtn, commentBtn, shareBtn, starBtn, exclamationBtn;
-        public HomeHolder(@NonNull View itemView) {
-            super(itemView);
+        HomeViewHolder(ItemHomeBinding itemHomeBinding) {
+            super(itemHomeBinding.getRoot());
+            binding = itemHomeBinding;
+        }
 
-            profileImage = itemView.findViewById(R.id.profileImage);
-            imageView = itemView.findViewById(R.id.imageView);
-            userName = itemView.findViewById(R.id.textName);
-            timestamp = itemView.findViewById(R.id.textTime);
-            likeCount = itemView.findViewById(R.id.textLikeCount);
-            likeBtn = itemView.findViewById(R.id.likeButton);
-            commentBtn = itemView.findViewById(R.id.commentButton);
-            shareBtn = itemView.findViewById(R.id.repostButton);
-            starBtn = itemView.findViewById(R.id.starButton);
-            exclamationBtn = itemView.findViewById(R.id.exclamationMarkButton);
+        void setHomeData(HomeModel homeModel) {
+            binding.TextName.setText(homeModel.getUserName());
+            binding.textTime.setText(homeModel.getTimestamp());
+            // like count
+            int count = homeModel.getLikeCount();
+            if (count == 0) {
+                binding.textLikeCount.setVisibility(View.INVISIBLE);
+            } else if (count == 1) {
+                binding.textLikeCount.setText(String.format("%d %s", count, "like"));
+            } else {
+                binding.textLikeCount.setText(count + " likes");
+            }
+
+            // Handle post image similar to how user image is handled in UserAdapter
+            if (homeModel.getPostImage() != null && !homeModel.getPostImage().isEmpty()) {
+                Bitmap bitmap = getPostImage(homeModel.getPostImage());
+                if (bitmap != null) {
+                    binding.imageView.setImageBitmap(bitmap);
+                } else {
+                    // Set a default image or hide the image view
+                    binding.imageView.setImageResource(R.drawable.ic_launcher_foreground); // Or set a default image
+                }
+            } else {
+                // Set a default image or hide the image view
+                binding.imageView.setImageResource(R.drawable.ic_launcher_foreground); // Or set a default image
+            }
+        }
+
+        private Bitmap getPostImage(String encodedImage) {
+            try {
+                byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            } catch (IllegalArgumentException e) {
+                Log.e("HomeAdapter", "Error decoding Base64 string: " + e.getMessage());
+                return null;
+            }
         }
     }
 }

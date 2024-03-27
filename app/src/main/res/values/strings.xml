@@ -31,5 +31,12 @@
     <string name="_2h">2h</string>
     <string name="post">Post</string>
     <string name="_100_likes">100 likes</string>
+    <string name="love_to_travel_around_the_world">Love to travel around the world</string>
+    <string name="following">Following</string>
+    <string name="_250">250</string>
+    <string name="_25k">25k</string>
+    <string name="posts">Posts</string>
+    <string name="followers">Followers</string>
+    <string name="follow">Follow</string>
     />
 </resources>

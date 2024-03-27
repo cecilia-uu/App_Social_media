@@ -39,6 +39,9 @@ import edu.northeastern.memecho.databinding.ActivitySignInBinding;
 import edu.northeastern.memecho.utilities.Constants;
 import edu.northeastern.memecho.utilities.PreferenceManager;
 
+/**
+ * Log in!
+ */
 public class SignInActivity extends AppCompatActivity {
     // the binding class for each XML layout will be generated automatically
     private ActivitySignInBinding binding;
@@ -153,6 +156,15 @@ public class SignInActivity extends AppCompatActivity {
         // user.put(Constants.KEY_PASSWORD, null); // no password
         user.put(Constants.KEY_IMAGE, String.valueOf(firebaseUser.getPhotoUrl()));
         user.put(Constants.KEY_USER_ID, firebaseUser.getUid());
+        // following number and follower number
+        // TODO: Following Number and Follower Number, post numer
+        // Assume that it's 0
+        user.put(Constants.KEY_FOLLOWER_NUM, 0);
+        user.put(Constants.KEY_FOLLOWING_NUM, 0);
+        user.put(Constants.KEY_POST_NUM, 0);
+
+        // TODO: status
+        user.put(Constants.KEY_STATUS, " ");
 
         database.collection(Constants.KEY_COLLECTION_USERS)
                 .add(user)
@@ -162,6 +174,13 @@ public class SignInActivity extends AppCompatActivity {
                     preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
                     preferenceManager.putString(Constants.KEY_NAME, firebaseUser.getDisplayName());
                     preferenceManager.putString(Constants.KEY_IMAGE, String.valueOf(firebaseUser.getPhotoUrl()));
+                    // TODO: Following Number and Follower Number, and Post Number
+                    preferenceManager.putString(Constants.KEY_POST_NUM, "0");
+                    preferenceManager.putString(Constants.KEY_FOLLOWING_NUM, "0");
+                    preferenceManager.putString(Constants.KEY_FOLLOWER_NUM, "0");
+                    // TODO
+                    preferenceManager.putString(Constants.KEY_STATUS, " ");
+
                     sendUserToHomeActivity();
                 })
                 .addOnFailureListener(exception -> {

@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,11 +63,11 @@ public class HomeFragment extends Fragment {
 
         init(view);
 
-        reference = FirebaseFirestore.getInstance().collection(Constants.KEY_COLLECTION_USERS)
-                .document(Constants.KEY_USER_ID);
+        //reference = FirebaseFirestore.getInstance().collection(Constants.KEY_COLLECTION_USERS)
+                //.document(Constants.KEY_USER_ID);
 
         list = new ArrayList<>();
-        adapter = new HomeAdapter(list, getContext());
+        adapter = new HomeAdapter(list);
         recyclerView.setAdapter(adapter);
 
         loadDataFromFirestore();
@@ -73,11 +75,21 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadDataFromFirestore() {
+        list.add(new HomeModel("Cecilia", "01/11/2024", "","", "123", 12));
+        list.add(new HomeModel("Patrick", "01/12/2024", "","", "124", 11));
+        list.add(new HomeModel("Sofia", "01/14/2024", "","", "125", 10));
+        list.add(new HomeModel("Daniel", "01/16/2024", "","", "126", 19));
 
+        adapter.notifyDataSetChanged();
     }
 
 
     private void init(View view) {
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        if (getActivity() != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        }
+
         recyclerView = view.findViewById(R.id.homeRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
