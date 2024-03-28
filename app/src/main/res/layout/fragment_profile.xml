@@ -20,6 +20,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/toolbarMenu"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:background="@drawable/ic_menu"
+                android:contentDescription="@string/share" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageSignOut"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:background="@drawable/background_icon"
+                android:padding="@dimen/_6sdp"
+                android:src="@drawable/ic_logout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:tint="@color/primary"/>
+
             <TextView
                 android:id="@+id/toolbarUsername"
                 android:layout_width="wrap_content"
@@ -31,16 +60,7 @@
                 android:textStyle="bold"
                 android:textSize="@dimen/_18sdp" />
 
-            <ImageView
-                android:id="@+id/toolbarMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_menu"
-                android:layout_margin="@dimen/_12sdp"
-                android:layout_alignParentRight="true"
-                android:contentDescription="@string/share" />
+
 
         </RelativeLayout>
 
@@ -48,8 +68,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImage"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
         android:layout_marginStart="@dimen/_14sdp"
         android:layout_marginTop="@dimen/_14sdp"
         android:src="@drawable/ic_profile"
@@ -90,7 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/profileImage"
-        android:layout_marginTop="@dimen/_10sdp">
+        android:layout_marginTop="@dimen/_8sdp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/countLayout"

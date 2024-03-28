@@ -45,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void setListeners() {
         binding.textSignIn.setOnClickListener(v ->
-                finish());
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class)));
         binding.buttonSignUp.setOnClickListener(v -> {
             if (isValidSignUpInfo()) {
                 signUp();

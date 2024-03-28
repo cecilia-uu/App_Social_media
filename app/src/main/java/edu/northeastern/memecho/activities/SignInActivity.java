@@ -4,24 +4,17 @@ package edu.northeastern.memecho.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.IntentSender;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.identity.BeginSignInRequest;
-import com.google.android.gms.auth.api.identity.BeginSignInResult;
-import com.google.android.gms.auth.api.identity.SignInClient;
-import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,14 +22,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.android.gms.auth.api.identity.Identity;
 
 
 import java.util.HashMap;
 
 import edu.northeastern.memecho.R;
 import edu.northeastern.memecho.databinding.ActivitySignInBinding;
-import edu.northeastern.memecho.fragments.ForgotPasswordFragment;
 import edu.northeastern.memecho.utilities.Constants;
 import edu.northeastern.memecho.utilities.PreferenceManager;
 
@@ -87,8 +78,8 @@ public class SignInActivity extends AppCompatActivity {
         });
         binding.buttonGoogleSignIn.setOnClickListener(v -> signInByGoogle());
         // forgot password function
-        binding.textForgotPassword.setOnClickListener(v ->
-                startActivity(new Intent(getApplicationContext(), ForgotPasswordFragment.class)));
+        binding.textForgotPassword.setOnClickListener(v -> startActivity(
+                new Intent(getApplicationContext(), ForgotPasswordActivity.class)));
     }
     private void signInByGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
