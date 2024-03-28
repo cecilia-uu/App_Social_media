@@ -8,7 +8,7 @@
 2. Open the terminal
 3. Input `echo $HOME`
 4. Create `.bash_profile` file by input `touch .bash_profile`
-5. Open `.bash_profile` file by inputting `open -e .bash_profile'
+5. Open `.bash_profile` file by inputting `open -e .bash_profile`
 6. In this file, enter `export PATH=${PATH}:/Users/XXX/Library/Android/sdk/platform-tools:/Users/XXX/Library/Android/sdk/tools`
 ## XXX should be replaced by the proper name of your address.
 7. Closing `.bash_profile` file will automatically save it.
