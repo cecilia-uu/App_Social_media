@@ -39,5 +39,6 @@
     <string name="followers">Followers</string>
     <string name="follow">Follow</string>
     <string name="recover">Recover</string>
+    <string name="add_something_about_this_post">Add something about this post</string>
     />
 </resources>

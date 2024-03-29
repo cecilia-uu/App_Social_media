@@ -5,23 +5,32 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
 
 import edu.northeastern.memecho.R;
 import edu.northeastern.memecho.activities.SignInActivity;
 import edu.northeastern.memecho.databinding.FragmentProfileBinding;
+import edu.northeastern.memecho.models.PostImageModel;
 import edu.northeastern.memecho.utilities.Constants;
 import edu.northeastern.memecho.utilities.PreferenceManager;
 
@@ -29,6 +38,9 @@ import edu.northeastern.memecho.utilities.PreferenceManager;
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private PreferenceManager preferenceManager;
+    private Boolean isMyProfile = true;
+    private String userId;
+    private FirestoreRecyclerAdapter<PostImageModel, PostImageHolder> adapter;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -41,12 +53,30 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         preferenceManager = new PreferenceManager(getContext());
         loadUserDetails();
+
         setListeners();
+        // recycler view setting
+        binding.postsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        binding.postsRecyclerView.setHasFixedSize(true);
+
+        // image posts
+        loadImages();
+
+        binding.postsRecyclerView.setAdapter(adapter);
+
         return binding.getRoot();
     }
 
     private void setListeners() {
         binding.imageSignOut.setOnClickListener(v -> signOut());
+        // switch from two layouts
+        if (isMyProfile) {
+            binding.followBtn.setVisibility(View.GONE);
+            binding.countLayout.setVisibility(View.VISIBLE);
+        } else {
+            binding.followBtn.setVisibility(View.VISIBLE);
+            binding.countLayout.setVisibility(View.GONE);
+        }
     }
 
 
@@ -110,5 +140,58 @@ public class ProfileFragment extends Fragment {
         // set status
         binding.textStatus.setText(preferenceManager.getString(Constants.KEY_STATUS));
 
+    }
+
+    private void loadImages() {
+        if (isMyProfile) {
+            userId = preferenceManager.getString(Constants.KEY_USER_ID);
+        }
+
+        DocumentReference reference = FirebaseFirestore.getInstance().collection(Constants.KEY_COLLECTION_USERS)
+                .document(userId);
+        Query query = reference.collection(Constants.KEY_COLLECTION_IMAGES);
+        FirestoreRecyclerOptions<PostImageModel> options = new
+                FirestoreRecyclerOptions.Builder<PostImageModel>()
+                .setQuery(query, PostImageModel.class)
+                .build();
+
+        adapter = new FirestoreRecyclerAdapter<PostImageModel, PostImageHolder>(options) {
+            @NonNull
+            @Override
+            public PostImageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_profile_image, parent, false);
+                return new PostImageHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull PostImageHolder holder, int position, @NonNull PostImageModel model) {
+                Glide.with(holder.itemView.getContext().getApplicationContext())
+                        .load(model.getImageUrl())
+                        .timeout(6500)
+                        .into(holder.imageView);
+            }
+        };
+    }
+
+    private static class PostImageHolder extends RecyclerView.ViewHolder {
+        private ImageView imageView;
+
+        public PostImageHolder(@NonNull View itemView) {
+            super(itemView);
+            imageView =itemView.findViewById(R.id.imageView);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

@@ -14,4 +14,5 @@ public class Constants {
     public static final String KEY_FOLLOWER_NUM = "followerNum";
     public static final String KEY_POST_NUM = "postNum";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_COLLECTION_IMAGES = "Images";
 }

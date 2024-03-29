@@ -60,6 +60,9 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging:23.4.1")
     implementation("com.google.firebase:firebase-firestore:24.11.0")
 
+    // FirebaseUI for Cloud Firestore
+    implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
+
     // MultiDex
     implementation("androidx.multidex:multidex:2.0.1")
 
