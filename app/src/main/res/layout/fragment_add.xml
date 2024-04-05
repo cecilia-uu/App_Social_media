@@ -9,55 +9,84 @@
     <RelativeLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
         <ImageButton
             android:id="@+id/backBtn"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:background="@drawable/ic_arrow_back"/>
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/ic_circle"
+            android:elevation="3dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="4dp"
+            android:src="@drawable/ic_arrow_back" />
 
         <ImageButton
             android:id="@+id/nextBtn"
             android:visibility="gone"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:background="@drawable/ic_arrow_forward"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:padding="4dp"
+            android:layout_margin="4dp"
+            android:elevation="3dp"
+            android:src="@drawable/ic_arrow_forward"
+            android:background="@drawable/ic_circle"
+            android:foreground="?attr/selectableItemBackground"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/descriptionET"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout"
-        android:hint="@string/add_something_about_this_post"
-        android:minLines="12" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout">
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="6dp"
-        android:background="#000"
-        android:layout_below="@id/descriptionET" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_below="@id/view"
-        android:contentDescription="@null"
-        android:visibility="gone"/>
+            <EditText
+                android:id="@+id/descriptionET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/add_something_about_this_post"
+                android:minLines="12" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageView"/>
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="6dp"
+                android:background="#000"
+                android:layout_below="@id/descriptionET" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                android:layout_below="@id/view"
+                android:contentDescription="@null"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
 
 
 </RelativeLayout>

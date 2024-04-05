@@ -13,14 +13,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,11 +80,23 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadDataFromFirestore() {
-        list.add(new HomeModel("Cecilia", "01/11/2024", "","", "123", 12));
-        list.add(new HomeModel("Patrick", "01/12/2024", "","", "124", 11));
-        list.add(new HomeModel("Sofia", "01/14/2024", "","", "125", 10));
-        list.add(new HomeModel("Daniel", "01/16/2024", "","", "126", 19));
-
+        // sample data
+//        list.add(new HomeModel("Cecilia", "01/11/2024", "","", "123", 12));
+//        list.add(new HomeModel("Patrick", "01/12/2024", "","", "124", 11));
+//        list.add(new HomeModel("Sofia", "01/14/2024", "","", "125", 10));
+//        list.add(new HomeModel("Daniel", "01/16/2024", "","", "126", 19));
+        CollectionReference reference = FirebaseFirestore.getInstance().collection(Constants.KEY_COLLECTION_USERS)
+                        .document(user.getUid())
+                                .collection(Constants.KEY_COLLECTION_POST_IMAGES);
+        reference.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.e("Error: ", error.getMessage());
+                    return;
+                }
+            }
+        });
         adapter.notifyDataSetChanged();
     }
 

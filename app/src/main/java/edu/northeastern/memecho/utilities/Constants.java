@@ -25,4 +25,8 @@ public class Constants {
     public static final String KEY_ID = "id";
     public static final String KEY_IMAGE_URL = "imageUrl";
     public static final String KEY_TIMESTAMP = "timestamp";
+    public static final String KEY_USERNAME = "userName";
+    public static final String KEY_LIKE_COUNT = "likeCount";
+    public static final String KEY_PROFILE_IMAGE = "profileImage";
+    public static final String KEY_POST_IMAGE = "postImage";
 }

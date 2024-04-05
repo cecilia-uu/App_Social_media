@@ -13,6 +13,9 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.checkerframework.checker.units.qual.C;
@@ -33,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
     private String encodedImage;
     private PreferenceManager preferenceManager;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         setListeners();
     }
 
@@ -92,6 +97,8 @@ public class SignUpActivity extends AppCompatActivity {
                     preferenceManager.putString(Constants.KEY_POST_NUM, "0");
                     preferenceManager.putString(Constants.KEY_STATUS, " ");
 
+                    updateProfile();
+
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
@@ -100,6 +107,13 @@ public class SignUpActivity extends AppCompatActivity {
                     loading(false);
                     showToast(exception.getMessage());
                 });
+    }
+
+    private void updateProfile() {
+        // TODO: P14 11.51 update user's profile
+        UserProfileChangeRequest.Builder request = new UserProfileChangeRequest.Builder();
+        request.setDisplayName(binding.inputName.getText().toString());  // ?
+        currentUser.updateProfile(request.build());
     }
 
     private String encodeImage(Bitmap bitmap) {

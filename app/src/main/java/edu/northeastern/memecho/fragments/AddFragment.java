@@ -1,29 +1,31 @@
 package edu.northeastern.memecho.fragments;
 
-import static edu.northeastern.memecho.utilities.ImageContent.loadSavedImages;
-
 import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+
 import com.bumptech.glide.Glide;
+import com.canhub.cropper.CropImageContract;
+import com.canhub.cropper.CropImageContractOptions;
+import com.canhub.cropper.CropImageOptions;
+import com.canhub.cropper.CropImageView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -46,6 +48,7 @@ import edu.northeastern.memecho.databinding.FragmentAddBinding;
 import edu.northeastern.memecho.models.GalleryImages;
 import edu.northeastern.memecho.utilities.Constants;
 import edu.northeastern.memecho.utilities.PreferenceManager;
+
 
 
 public class AddFragment extends Fragment {
@@ -89,13 +92,9 @@ public class AddFragment extends Fragment {
             public void onSend(Uri picUri) {
                 imageUri = picUri;
 
-                Glide.with(getContext())
-                        .load(picUri)
-                                .into(binding.imageView);
 
-                // make image view become visible
-                binding.imageView.setVisibility(View.VISIBLE);
-                binding.nextBtn.setVisibility(View.VISIBLE);
+
+                startCrop();
             }
         });
 
@@ -122,6 +121,35 @@ public class AddFragment extends Fragment {
             }
         });
     }
+    // crop image
+    private final ActivityResultLauncher<CropImageContractOptions> cropImage = registerForActivityResult(
+            new CropImageContract(),
+            new ActivityResultCallback<CropImageView.CropResult>() {
+                @Override
+                public void onActivityResult(CropImageView.CropResult o) {
+                    if (o.isSuccessful()) {
+                        Uri uriContent = o.getUriContent();
+
+                        Glide.with(getContext())
+                                .load(uriContent)
+                                .into(binding.imageView);
+
+                        // make image view become visible
+                        binding.imageView.setVisibility(View.VISIBLE);
+                        binding.nextBtn.setVisibility(View.VISIBLE);
+                    } else {
+                        Throwable error = o.getError();
+                    }
+                }
+            }
+    );
+
+    private void startCrop() {
+        CropImageOptions cropImageOptions = new CropImageOptions();
+        cropImageOptions.guidelines = CropImageView.Guidelines.ON;
+        CropImageContractOptions options = new CropImageContractOptions(Uri.EMPTY, new CropImageOptions());
+        cropImage.launch(options);
+    }
 
     private void uploadData(String imageUrl) {
         CollectionReference reference = FirebaseFirestore.getInstance()
@@ -136,6 +164,10 @@ public class AddFragment extends Fragment {
         map.put(Constants.KEY_DESCRIPTION, description);
         map.put(Constants.KEY_IMAGE_URL, imageUrl);
         map.put(Constants.KEY_TIMESTAMP, FieldValue.serverTimestamp());
+
+        map.put(Constants.KEY_USERNAME, user.getDisplayName());
+        map.put(Constants.KEY_LIKE_COUNT, 0);
+        map.put(Constants.KEY_PROFILE_IMAGE, String.valueOf(user.getPhotoUrl()));
 
         reference.document(id).set(map)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -191,4 +223,5 @@ public class AddFragment extends Fragment {
             }
         });
     }
+
 }

@@ -74,4 +74,6 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
     implementation("com.karumi:dexter:6.2.3")
+    // cropimage
+    implementation("com.vanniktech:android-image-cropper:4.5.0")
 }
