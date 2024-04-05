@@ -1,7 +1,12 @@
 package edu.northeastern.memecho.utilities;
 
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
+
 public class Constants {
     public static final String KEY_COLLECTION_USERS = "users";
+    public static final String KEY_COLLECTION_POST_IMAGES = "Post Images";
     public static final String KEY_NAME = "name";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
@@ -15,4 +20,9 @@ public class Constants {
     public static final String KEY_POST_NUM = "postNum";
     public static final String KEY_STATUS = "status";
     public static final String KEY_COLLECTION_IMAGES = "Images";
+    public static final String KEY_STORAGE_POST_IMAGES = "Post Images/";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_ID = "id";
+    public static final String KEY_IMAGE_URL = "imageUrl";
+    public static final String KEY_TIMESTAMP = "timestamp";
 }

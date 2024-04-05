@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import edu.northeastern.memecho.R;
@@ -19,6 +21,7 @@ import edu.northeastern.memecho.models.GalleryImages;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryHolder> {
     private List<GalleryImages> list;
+    private SendImage onSendImage; // inner interface in this class
 
     public GalleryAdapter(List<GalleryImages> list) {
         this.list = list;
@@ -34,7 +37,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryH
 
     @Override
     public void onBindViewHolder(@NonNull GalleryHolder holder, int position) {
-        holder.imageView.setImageURI(list.get(position).getPicUri());
+        Glide.with(holder.imageView.getContext().getApplicationContext())
+                        .load(list.get(position).getPicUri())
+                                .into(holder.imageView);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +50,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryH
     }
 
     private void chooseImage(Uri picUri) {
+        onSendImage.onSend(picUri);
     }
 
     @Override
@@ -59,5 +65,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryH
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
         }
+    }
+// Interface
+    public interface SendImage {
+        void onSend(Uri picUri);
+    }
+
+    public void SendImage (SendImage sendImage) {
+        this.onSendImage = sendImage;
     }
 }
